@@ -6,10 +6,9 @@ RSpec.describe 'Items API' do
   let!(:items) { create_list(:item, 20, inventory_id: inventory.id) }
   let(:inventory_id) { inventory.id }
   let(:id) { items.first.id }
-  let(:headers) { valid_headers }
 
   describe 'GET /inventories/:inventory_id/items' do
-    before { get "/inventories/#{inventory_id}/items", params: {}, headers: headers }
+    before { get "/inventories/#{inventory_id}/items", params: {} }
 
     context 'when inventory exists' do
       it 'returns status code 200' do
@@ -35,7 +34,7 @@ RSpec.describe 'Items API' do
   end
 
   describe 'GET /inventories/:inventory_id/items/:id' do
-    before { get "/inventories/#{inventory_id}/items/#{id}", params: {}, headers: headers }
+    before { get "/inventories/#{inventory_id}/items/#{id}", params: {} }
 
     context 'when inventory item exists' do
       it 'returns status code 200' do
@@ -64,7 +63,7 @@ RSpec.describe 'Items API' do
     let(:valid_attributes) { { name: 'Visit Narnia', description: 'Best thing!', wielder: 'Mage', level: '12' }.to_json }
 
     context 'when request attributes are valid' do
-      before { post "/inventories/#{inventory_id}/items", params: valid_attributes, headers: headers }
+      before { post "/inventories/#{inventory_id}/items", params: valid_attributes }
 
       it 'returns status code 201' do
         expect(response).to have_http_status(201)
@@ -72,7 +71,7 @@ RSpec.describe 'Items API' do
     end
 
     context 'when an invalid request' do
-      before { post "/inventories/#{inventory_id}/items", params: {}, headers: headers }
+      before { post "/inventories/#{inventory_id}/items", params: {} }
 
       it 'returns status code 422' do
         expect(response).to have_http_status(422)
@@ -87,7 +86,7 @@ RSpec.describe 'Items API' do
   describe 'PUT /inventories/:inventory_id/items/:id' do
     let(:valid_attributes) { { name: 'DeathBringer' }.to_json }
 
-    before { put "/inventories/#{inventory_id}/items/#{id}", params: valid_attributes, headers: headers }
+    before { put "/inventories/#{inventory_id}/items/#{id}", params: valid_attributes }
 
     context 'when item exists' do
       it 'returns status code 204' do
@@ -114,7 +113,7 @@ RSpec.describe 'Items API' do
   end
 
   describe 'DELETE /inventories/:id' do
-    before { delete "/inventories/#{inventory_id}/items/#{id}", params: {}, headers: headers }
+    before { delete "/inventories/#{inventory_id}/items/#{id}", params: {} }
 
     it 'returns status code 204' do
       expect(response).to have_http_status(204)
