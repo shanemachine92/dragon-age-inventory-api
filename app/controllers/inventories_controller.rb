@@ -2,11 +2,11 @@ class InventoriesController < ApplicationController
   before_action :set_inventory, only: [:show, :update, :destroy]
 
   def index
-    render :json => @inventories = Inventory.all, :status => :ok
+    render :json => @inventories = current_user.inventories, :status => :ok
   end
 
   def create
-    @inventory = Inventory.create!(inventory_params)
+    @inventory = current_user.inventories.create!(inventory_params)
     render :json => @inventory, :status => :created
   end
 

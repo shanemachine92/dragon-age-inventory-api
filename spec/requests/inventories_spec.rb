@@ -1,15 +1,17 @@
 require 'rails_helper'
 
 RSpec.describe 'Dragon Age Inventories API', type: :request do
-  let!(:inventories) { create_list(:inventory, 10) }
+  let(:user) { create(:user) }
+  let!(:inventories) { create_list(:inventory, 10, created_by: user.id) }
   let(:inventory_id) { inventories.first.id }
+  let(:headers) { valid_headers }
 
   describe 'GET /inventories' do
-    before { get '/inventories' }
+    before { get '/inventories', params: {}, headers: headers }
 
     it 'returns inventories' do
-      expect(JSON.parse(response.body)).not_to be_empty
-      expect(JSON.parse(response.body).size).to eq(10)
+      expect(json).not_to be_empty
+      expect(json.size).to eq(10)
     end
 
     it 'returns status code of 200' do
@@ -18,12 +20,12 @@ RSpec.describe 'Dragon Age Inventories API', type: :request do
   end
   
   describe 'GET /inventories/:id' do
-    before { get "/inventories/#{inventory_id}" }
+    before { get "/inventories/#{inventory_id}", params: {}, headers: headers }
 
     context 'when the record exists' do
       it 'returns the inventory' do
-        expect(JSON.parse(response.body)).not_to be_empty
-        expect(JSON.parse(response.body)['id']).to eq(inventory_id)
+        expect(json).not_to be_empty
+        expect(json['id']).to eq(inventory_id)
       end
 
       it 'returns status code 200' do
@@ -45,10 +47,10 @@ RSpec.describe 'Dragon Age Inventories API', type: :request do
   end
 
   describe 'POST /inventories' do
-    let(:valid_attributes) { { title: 'Pointy Things', created_by: 'Harry Potter' } }
+    let(:valid_attributes) { { title: 'Pointy Things', created_by: 'Harry Potter' }.to_json }
 
     context 'when the request is valid' do
-      before { post '/inventories', params: valid_attributes }
+      before { post '/inventories', params: valid_attributes, headers: headers }
 
       it 'creates an inventory' do
         expect(JSON.parse(response.body)['title']).to eq('Pointy Things')
@@ -60,7 +62,7 @@ RSpec.describe 'Dragon Age Inventories API', type: :request do
     end
 
     context 'when the request is invalid' do
-      before { post '/inventories', params: { title: 'Should be Invalid' } }
+      before { post '/inventories', params: valid_attributes, headers: headers }
 
       it 'returns status code 422' do
         expect(response).to have_http_status(422)
@@ -73,7 +75,7 @@ RSpec.describe 'Dragon Age Inventories API', type: :request do
   end
 
   describe 'PUT /inventories/:id' do
-    let(:valid_attributes) { { title: 'Shields' } }
+    let(:valid_attributes) { { title: 'Shields' }.to_json }
 
     context 'when the record exists' do
       before { put "/inventories/#{inventory_id}", params: valid_attributes }
@@ -89,7 +91,7 @@ RSpec.describe 'Dragon Age Inventories API', type: :request do
   end
 
   describe 'DELETE /inventories/:id' do
-    before { delete "/inventories/#{inventory_id}" }
+    before { delete "/inventories/#{inventory_id}", params: {}, headers: headers }
 
     it 'returns status code 204' do
       expect(response).to have_http_status(204)
