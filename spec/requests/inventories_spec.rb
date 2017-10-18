@@ -46,7 +46,7 @@ RSpec.describe 'Dragon Age Inventories API', type: :request do
   end
 
   describe 'POST /inventories' do
-    let(:valid_attributes) { { title: 'Pointy Things', created_by: 'Harry Potter' }.to_json }
+    let(:valid_attributes) { { title: 'Pointy_Things', created_by: 'Harry_Potter' }.to_json }
 
     context 'when the request is valid' do
       before { post '/inventories', params: valid_attributes }

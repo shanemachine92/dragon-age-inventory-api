@@ -1,21 +1,22 @@
 class InventoriesController < ApplicationController
   before_action :set_inventory, only: [:show, :update, :destroy]
+  before_action :authenticate_request!
 
   def index
-    render :json => @inventories = Inventory.all, :status => :ok
+    render :json => @inventories = Inventory.all, :status => :ok, 'logged_in' => true
   end
 
   def create
     @inventory = Inventory.create!(inventory_params)
-    render :json => @inventory, :status => :created
+    json_response(@inventory, :created)
   end
 
   def show
-    render :json => @inventory, :status => :ok
+    json_response(@inventory)
   end
 
   def update
-    render :json => @inventory.update(inventory_params), :status => :ok
+    json_response(@inventory.update(inventory_params))
     head :no_content
   end
 
