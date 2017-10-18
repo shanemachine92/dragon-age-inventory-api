@@ -6,30 +6,35 @@ class ItemsController < ApplicationController
     if @inventory
       render :json => @inventory.items, :status => :ok
     else
-      render :status => :not_found
+      render json: {}, :status => :not_found
     end
   end
 
   def show
     if @items
-      render :xml => @items, status: => :ok
+      render :xml => @items, :status => :ok
     else
-      render :status => :not_found
+      render json: {}, :status => :not_found
     end
   end
 
   def create
-    render :json => @inventory.items.create!(item_params), :status => :created
+    @item = @inventory.items.new(item_params)
+    if @item.save
+      render :json => @item, :status => :created
+    else
+      render json: {}, :status => :unprocessable_entity
+    end
   end
 
   def update
-    @item.update(item_params)
-    head :no_content
+    @item.update(item_params) if @item
+    render json: {}, :status => :no_content
   end
 
   def destroy
-    @item.destroy
-    head :no_content
+    @item.destroy if @item
+    render json: {}, :status => :no_content
   end
 
   private
@@ -39,10 +44,14 @@ class ItemsController < ApplicationController
   end
 
   def set_inventory
-    @inventory = Inventory.find(params[:inventory_id])
+    if @inventory
+    @inventory = Inventory.find_by(id: params[:inventory_id])
+    else
+      render json: {}, :status => :not_found
+    end
   end
 
   def set_inventory_item
-    @item = @inventory.items.find_by!(id: params[:id]) if @inventory
+    @item = @inventory.items.find_by(inventory_id: params[:id]) if @item
   end
 end
