@@ -3,24 +3,32 @@ class ItemsController < ApplicationController
   before_action :set_inventory_item, only: [:show, :update, :destroy]
 
   def index
-    json_response(@inventory.items)
+    if @inventory
+      render :json => @inventory.items, :status => :ok
+    else
+      render :status => :not_found
+    end
   end
 
   def show
-    json_response(@items)
+    if @items
+      render :xml => @items, status: => :ok
+    else
+      render :status => :not_found
+    end
   end
 
   def create
-    json_response(@inventory.items.create!(item_params), :created)
+    render :json => @inventory.items.create!(item_params), :status => :created
   end
 
   def update
-    json_response(@item.update(item_params))
+    @item.update(item_params)
     head :no_content
   end
 
   def destroy
-    json_response(@item.destroy)
+    @item.destroy
     head :no_content
   end
 

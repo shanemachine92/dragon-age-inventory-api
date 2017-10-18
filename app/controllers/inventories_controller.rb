@@ -4,20 +4,28 @@ class InventoriesController < ApplicationController
 
   def index
     @inventories = Inventory.all
-    json_response(@inventories)
+    render :json => @inventories, :status => :ok
   end
 
   def create
     @inventory = Inventory.create!(inventory_params)
-    json_response(@inventory, :created)
+    if @inventory.save!
+      render :json => @inventory, :status => :created
+    else
+     render :status => :unprocessable_entity
+    end
   end
 
   def show
-    json_response(@inventory)
+    if @inventory
+      render :json => @inventory, :status => :ok
+    else
+      render :status => :not_found
+    end
   end
 
   def update
-    json_response(@inventory.update(inventory_params))
+    @inventory.update(inventory_params)
     head :no_content
   end
 
