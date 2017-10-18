@@ -3,7 +3,8 @@ class InventoriesController < ApplicationController
   before_action :authenticate_request!
 
   def index
-    render :json => @inventories = Inventory.all, :status => :ok, 'logged_in' => true
+    @inventories = Inventory.all
+    json_response(@inventories)
   end
 
   def create
