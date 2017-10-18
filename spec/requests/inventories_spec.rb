@@ -53,7 +53,7 @@ RSpec.describe 'Dragon Age Inventories API', type: :request do
       before { post '/inventories', params: valid_attributes, headers: headers }
 
       it 'creates an inventory' do
-        expect(JSON.parse(response.body)['title']).to eq('Pointy Things')
+        expect(json['title']).to eq('Pointy Things')
       end
 
       it 'returns status code 201' do
@@ -81,7 +81,7 @@ RSpec.describe 'Dragon Age Inventories API', type: :request do
       before { put "/inventories/#{inventory_id}", params: valid_attributes }
 
       it 'updates the record' do
-        expect(JSON.parse(response.body)).to be_empty
+        expect(response.body).to be_empty
       end
 
       it 'returns status code 204' do

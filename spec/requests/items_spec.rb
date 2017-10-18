@@ -61,7 +61,7 @@ RSpec.describe 'Items API' do
   end
 
   describe 'POST /inventories/:inventory_id/items' do
-    let(:valid_attributes) { { name: 'Visit Narnia', description: 'Best thing!', wielder: 'Mage', level: 12 } }
+    let(:valid_attributes) { { name: 'Visit Narnia', description: 'Best thing!', wielder: 'Mage', level: '12' }.to_json }
 
     context 'when request attributes are valid' do
       before { post "/inventories/#{inventory_id}/items", params: valid_attributes, headers: headers }

@@ -2,10 +2,12 @@ class InventoriesController < ApplicationController
   before_action :set_inventory, only: [:show, :update, :destroy]
 
   def index
+    @current_user = (AuthorizeApiRequest.new(request.headers).call)[:user]
     render :json => @inventories = current_user.inventories, :status => :ok
   end
 
   def create
+    @current_user = (AuthorizeApiRequest.new(request.headers).call)[:user]
     @inventory = current_user.inventories.create!(inventory_params)
     render :json => @inventory, :status => :created
   end
