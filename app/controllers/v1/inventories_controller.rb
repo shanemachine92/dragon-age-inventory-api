@@ -5,7 +5,7 @@ module V1
 
     def index
       @inventories = Inventory.all
-      render :json => @inventories, :status => :ok
+      render :json => @inventories, include: 'items', :status => :ok
     end
 
     def create
@@ -19,7 +19,7 @@ module V1
 
     def show
       if @inventory
-        render :json => @inventory, :status => :ok
+        render :json => @inventory, include: 'items', :status => :ok
       else
         render :status => :not_found
       end

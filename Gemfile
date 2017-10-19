@@ -32,6 +32,7 @@ group :development, :test do
   # gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'pry-rails', '~> 0.3.6'
   gem 'rspec-rails', '~> 3.6', '>= 3.6.1'
+  gem 'active_model_serializers', '~> 0.10.0'
 end
 
 group :development do

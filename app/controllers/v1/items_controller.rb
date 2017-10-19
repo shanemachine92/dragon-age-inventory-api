@@ -12,10 +12,10 @@ module V1
     end
 
     def show
-      if @items
-        render :xml => @items, status: => :ok
+      if @item
+        render :json => @item, :status => :ok
       else
-        render :status => :not_found
+        render :xml=> {}, :status => :not_found
       end
     end
 
