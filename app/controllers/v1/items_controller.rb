@@ -20,7 +20,7 @@ module V1
     end
 
     def create
-      render :json => @inventory.items.create!(item_params), :status => :created
+      render :json => @inventory.items.create!(item_params), :status => :created if @inventory
     end
 
     def update
