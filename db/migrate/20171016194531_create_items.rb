@@ -3,7 +3,7 @@ class CreateItems < ActiveRecord::Migration[5.1]
     create_table :items do |t|
       t.string :name
       t.text :description
-      t.string :class
+      t.string :wielder
       t.integer :level
       t.references :inventory, foreign_key: true
 
