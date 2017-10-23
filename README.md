@@ -24,7 +24,7 @@ ex: `curl -X POST -d email='<email>' -d password='<password>' http://localhost:3
 
 The output should look something like this: `{"auth_token":"####################################.##################.###########################################","user":{"id":#,"email":"<email>"}}`
 
-### You should now be able to get, post, and update inventories and items by passing in the mandatory  fields.
+You should now be able to get, post, and update inventories and items by passing in the mandatory  fields.
 
 Inventories: title, created_by
 Items: name, description, wielder, level
@@ -33,7 +33,7 @@ Remmeber, you MUST pass in your authorization token along with each of your requ
 
 Some examples using curl:
 
-GET requests
+##### GET requests
 Get all inventories: `curl -H "Authorization: Bearer <token>" http://localhost:3000/inventories`
 
 Get a particular inventory by ID: `curl -H "Authorization: Bearer <token>" http://localhost:3000/inventories/1`
@@ -42,18 +42,18 @@ Get an inventory's items:`curl -H "Authorization: Bearer <token>" http://localho
 
 Get a particular item:`curl -H "Authorization: Bearer <token>" http://localhost:3000/inventories/<id>/items/<id>`
 
-POST requests
+##### POST requests
 To create a new inventory:`curl -H "Authorization: Bearer <token>" -X POST -d title='Staffs' -d created_by='shane' http://localhost:3000/inventories`
 
 To create a new item:`curl -H "Authorization: Bearer <token>" -X POST -d title='Staffs' -d created_by='shane' http://localhost:3000/inventories/<id>/items`
 
-PUT requests
+##### PUT requests
 
 To update an inventory's title: `curl -H "Authorization: Bearer <token>" -X PUT -d title='Staffs on Staffs' http://localhost:3000/inventories/<id>`
 
 You get the idea...
 
-DELETE requests
+##### DELETE requests
 `curl -H "Authorization: Bearer <token>" -X DELETE http://localhost:3000/inventories/<id>/items/<id>`
 
 
