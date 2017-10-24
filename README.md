@@ -45,7 +45,7 @@ Get a particular item:`curl -H "Authorization: Bearer <token>" http://localhost:
 ##### POST requests
 To create a new inventory:`curl -H "Authorization: Bearer <token>" -X POST -d title='Staffs' -d created_by='shane' http://localhost:3000/inventories`
 
-To create a new item:`curl -H "Authorization: Bearer <token>" -X POST -d title='Staffs' -d created_by='shane' http://localhost:3000/inventories/<id>/items`
+To create a new item:`curl -H "Authorization: Bearer <token>" -X POST -d name='Kiss of Winter' -d description='When the wind of this staff blows, you will not want to be in the way' -d wielder='Mage' -d level=15 http://localhost:3000/inventories/<id>/items`
 
 ##### PUT requests
 
